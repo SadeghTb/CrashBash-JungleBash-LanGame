@@ -10,7 +10,7 @@ Connection::Connection() : receiveT(&Connection::receive, this), sendT(&Connecti
     error = false;
 }
 
-void Connection::start()
+void Connection::start(std::string serverIp)
 {
     log.lock();
     std::clog <<"Start Connection Number " <<ID <<"\n";
@@ -41,7 +41,7 @@ void Connection::start()
     }
     else
     {
-        sf::Socket::Status status = socket.connect("192.168.43.97", 53000);
+        sf::Socket::Status status = socket.connect(serverIp, 53000);
         if (status != sf::Socket::Done)
         {
             // error...

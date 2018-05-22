@@ -16,7 +16,7 @@ void Connection::start()
     log.lock();
     std::clog <<"Start Connection Number " <<ID <<"\n";
     log.unlock();
-    if(ID==0)
+    if(ID==0) //Server connection
     {
         sf::TcpListener listener;
         // bind the listener to a port
@@ -40,9 +40,9 @@ void Connection::start()
             return;
         }
     }
-    else
+    else   //client connection
     {
-        sf::Socket::Status status = socket.connect("192.168.43.120", 53000);
+        sf::Socket::Status status = socket.connect("127.0.0.1", 53000);
         if (status != sf::Socket::Done)
         {
             // error...

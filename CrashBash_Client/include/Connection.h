@@ -27,7 +27,7 @@ private:
 public:
     Connection();
 
-    void start();
+    void start(std::string);
     void sendPacket(sf::Packet);
     sf::Packet receivePacket();
     int haveInQ();

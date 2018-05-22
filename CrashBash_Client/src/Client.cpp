@@ -6,10 +6,17 @@ Client::Client()
 
 }
 
+string Client::getServerIp()
+{
+    string ip;
+    cout<<"Enter Server Ip : ";
+    cin>>ip;
+    return ip;
+}
 void Client::run()
 {
     setPlayerId();
-    connection.start();
+    connection.start(getServerIp());
     while(connection.haveInQ()==0)
         sf::sleep(sf::milliseconds(20));
 
@@ -22,7 +29,6 @@ void Client::run()
 
         if(connection.haveInQ()!=0)
         {
-            // cout<<"L";
             string a;
             sf::Packet packet = connection.receivePacket();
             packet >> a;
@@ -30,7 +36,6 @@ void Client::run()
         }
         else
         {
-            //cout<<"R"<<endl;
             parser.def();
         }
         Input inp;
@@ -46,14 +51,6 @@ void Client::run()
             inp.space=true;
 
         parser.Input=inp;
-    //connection.start();
-     //   connection.receive();
-        //else
-        //{
-
-           // cout<<"F";
-        //}
-        //connection
 
         parser.deCode();
 
@@ -61,25 +58,21 @@ void Client::run()
         for(int i=0;i<parser.getNormalBoxNum();i++)
         {
             graphic.showNormalBoxes(parser.normalBoxVector[i]);
-            //cout<<parser.normalBoxV<<endl;
         }
 
         for(int i=0;i<parser.getTntBoxNum();i++)
         {
             graphic.showTntBoxes(parser.tntBoxVector[i]);
-          //  cout<<"this is tntbox"<<endl;
         }
 
         for(int i=0;i<parser.getGiftBoxNum();i++)
         {
             graphic.showGiftBoxes(parser.giftBoxVector[i]);
-           // cout<<"this is giftbox"<<endl;
         }
 
         for(int i=0;i<parser.getPlayerNum();i++)
         {
             graphic.showPlayers(parser.playerVector[i]);
-           // cout<<"this is player"<<endl;
         }
         showIconAndHealth();
         player.getKeys();
@@ -100,8 +93,6 @@ void Client::run()
 void Client::showIconAndHealth()
 {
     graphic.showPlayerIcon(parser.playerVector[0],firstHeart-80,distanceFromUp);
-    //cout<<"\nInja  "<<parser.playerVector[0]->gethealth()<<endl;
-    //cout<<"Inja  "<<parser.playerVector[1]->gethealth()<<endl;
 
     if(parser.playerVector[0]->gethealth()==3)
     {
